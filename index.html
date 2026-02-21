@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rodrigo Pontes | Geek Hub Premium</title>
+    <title>Rodrigo Pontes | Geek Hub Pro</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,17 +15,15 @@
             --bg-card: #161616;
             --bg-sidebar: #0f0f0f;
             --text-gray: #b1b1b1;
-            --ad-bg: #1e1e1e;
         }
 
         body {
             background-color: var(--bg-body);
             color: white;
             font-family: 'Segoe UI', Roboto, sans-serif;
-            overflow-x: hidden;
         }
 
-        /* NAVBAR */
+        /* HEADER FIXO */
         .navbar-custom {
             background-color: rgba(10, 10, 10, 0.98);
             backdrop-filter: blur(15px);
@@ -33,279 +31,264 @@
             z-index: 1060;
         }
 
-        /* LAYOUT DE COLUNAS */
-        .main-wrapper { display: flex; margin-top: 65px; }
+        /* LAYOUT RESPONSIVO */
+        .main-container {
+            display: grid;
+            grid-template-columns: 240px 1fr 300px; /* Desktop: 3 colunas */
+            margin-top: 65px;
+            min-height: 100vh;
+        }
 
-        /* SIDEBAR ESQUERDA (FIXA EM DESKTOP) */
+        /* SIDEBAR ESQUERDA - FIXA NO DESKTOP */
         .sidebar-left {
-            width: 260px;
             background: var(--bg-sidebar);
+            padding: 20px;
+            border-right: 1px solid #222;
             height: calc(100vh - 65px);
             position: sticky;
             top: 65px;
-            padding: 20px;
-            border-right: 1px solid #222;
             overflow-y: auto;
         }
 
         /* CONTEÚDO CENTRAL */
         .content-main {
-            flex: 1;
             padding: 25px;
-            min-width: 0; /* Fix para flexbox e textos longos */
+            overflow-x: hidden;
         }
 
-        /* COLUNA DIREITA (WIDGETS/ADS) */
+        /* SIDEBAR DIREITA (ADS) */
         .sidebar-right {
-            width: 320px;
             padding: 25px;
-            display: none; /* Escondido em telas pequenas */
+            border-left: 1px solid #222;
         }
 
-        @media (min-width: 1200px) { .sidebar-right { display: block; } }
-        @media (max-width: 992px) { .sidebar-left { display: none; } }
-
-        /* COMPONENTES INTERATIVOS */
-        .nav-item-geek {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            border-radius: 10px;
-            color: white;
-            text-decoration: none;
-            transition: all 0.2s;
-            margin-bottom: 5px;
-        }
-        .nav-item-geek:hover { background: #222; color: var(--primary); }
-        .nav-item-geek.active { background: var(--primary); color: black; font-weight: bold; }
-
-        /* SIMULAÇÃO DE PROPAGANDA */
-        .ad-slot {
-            background: var(--ad-bg);
-            border: 1px dashed #444;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            margin-bottom: 25px;
-            position: relative;
-        }
-        .ad-badge {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            font-size: 10px;
-            background: #444;
-            padding: 2px 5px;
-            border-radius: 3px;
+        /* RESPONSIVIDADE (TABLETS E CELULARES) */
+        @media (max-width: 1200px) {
+            .main-container { grid-template-columns: 240px 1fr; }
+            .sidebar-right { display: none; } /* Esconde anúncios laterais no tablet */
         }
 
-        /* VIDEO CARDS */
-        .video-card { cursor: pointer; transition: 0.3s; background: var(--bg-card); border-radius: 12px; overflow: hidden; border: 1px solid #222; }
-        .video-card:hover { transform: scale(1.02); border-color: var(--primary); }
-        .thumb-box { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+        @media (max-width: 992px) {
+            .main-container { grid-template-columns: 1fr; }
+            .sidebar-left { display: none; } /* Sidebar vira offcanvas no mobile */
+        }
+
+        /* CARDS E ELEMENTOS */
+        .video-card { cursor: pointer; transition: 0.3s; background: var(--bg-card); border-radius: 12px; border: 1px solid #222; height: 100%; }
+        .video-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .thumb-box { position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: 12px 12px 0 0; }
         .thumb-box img { width: 100%; height: 100%; object-fit: cover; }
-        .duration { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+
+        /* ADS SIMULADOS */
+        .ad-box { background: #1a1a1a; border: 1px dashed #444; border-radius: 8px; padding: 15px; margin-bottom: 20px; text-align: center; }
+        .ad-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* DISQUS CONTAINER */
+        #disqus_thread {
+            background: #f8f9fa; /* Fundo levemente claro para leitura ou remova para dark */
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
 
         /* FOOTER */
-        footer { background: #050505; border-top: 1px solid #222; padding: 60px 0 30px; }
+        footer { background: #050505; border-top: 1px solid #222; padding: 50px 0; }
         .form-control-dark { background: #1a1a1a; border: 1px solid #333; color: white; }
-        .form-control-dark:focus { background: #222; border-color: var(--primary); color: white; box-shadow: none; }
-
-        /* CATEGORY PILLS */
-        .pill-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 20px; scrollbar-width: none; }
-        .pill-row::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
     <nav class="navbar navbar-custom fixed-top px-4">
-        <div class="container-fluid">
+        <div class="container-fluid d-flex justify-content-between">
             <div class="d-flex align-items-center">
-                <button class="btn text-white d-lg-none me-2" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+                <button class="btn text-white d-lg-none me-2" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
                     <i class="fas fa-bars"></i>
                 </button>
-                <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="#">
-                    <div class="bg-warning text-black px-2 rounded me-2">HUB</div>
-                    RODRIGO<span class="text-warning">PONTES</span>
-                </a>
+                <a class="navbar-brand text-white fw-bold" href="#">RODRIGO<span class="text-warning">PONTES</span></a>
             </div>
             <div class="d-none d-md-flex flex-grow-1 mx-5">
-                <div class="input-group">
-                    <input type="text" class="form-control form-control-dark border-0" placeholder="Pesquisar vídeos, hardwares...">
-                    <button class="btn btn-dark border-0"><i class="fas fa-search text-gray"></i></button>
-                </div>
+                <input type="text" class="form-control form-control-dark rounded-pill border-0 px-4" placeholder="Buscar no Hub...">
             </div>
-            <div class="d-flex gap-3 align-items-center">
-                <i class="fas fa-bell text-white"></i>
-                <div class="rounded-circle bg-warning" style="width: 32px; height: 32px;"></div>
+            <div class="d-flex gap-3">
+                <a href="#" class="text-white"><i class="fab fa-discord"></i></a>
+                <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </nav>
 
-    <div class="main-wrapper">
-        <aside class="sidebar-left">
-            <a href="#" class="nav-item-geek active"><i class="fas fa-home me-3"></i> Home</a>
-            <a href="#" class="nav-item-geek"><i class="fas fa-bolt me-3"></i> Shorts</a>
-            <a href="#" class="nav-item-geek"><i class="fas fa-layer-group me-3"></i> Inscrições</a>
-            <hr class="text-secondary">
-            <h6 class="text-gray small ps-3 mb-3">VOCÊ</h6>
-            <a href="#" class="nav-item-geek"><i class="fas fa-history me-3"></i> Histórico</a>
-            <a href="#" class="nav-item-geek"><i class="fas fa-clock me-3"></i> Assistir Tarde</a>
-            <a href="#" class="nav-item-geek"><i class="fas fa-thumbs-up me-3"></i> Gostei</a>
-            <hr class="text-secondary">
-            <h6 class="text-gray small ps-3 mb-3">EXPLORAR</h6>
-            <a href="#" class="nav-item-geek"><i class="fas fa-gamepad me-3"></i> Games</a>
-            <a href="#" class="nav-item-geek"><i class="fas fa-newspaper me-3"></i> Notícias</a>
-            <a href="#" class="nav-item-geek"><i class="fas fa-trophy me-3"></i> Esportes</a>
+    <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="mobileMenu">
+        <div class="offcanvas-header border-bottom border-secondary">
+            <h5 class="offcanvas-title text-warning">MENU</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body" id="menuMobileContent">
+            </div>
+    </div>
+
+    <div class="main-container">
+        <aside class="sidebar-left d-none d-lg-block">
+            <nav class="nav flex-column gap-2">
+                <a href="#" class="nav-link text-warning fw-bold"><i class="fas fa-home me-2"></i> Início</a>
+                <a href="#" class="nav-link text-white"><i class="fas fa-bolt me-2"></i> Em Alta</a>
+                <a href="#" class="nav-link text-white"><i class="fas fa-folder me-2"></i> Playlists</a>
+                <hr class="border-secondary">
+                <p class="small text-gray px-3">CATEGORIAS</p>
+                <a href="#" class="nav-link text-white small"><i class="fas fa-gamepad me-2"></i> Playstation 5</a>
+                <a href="#" class="nav-link text-white small"><i class="fas fa-microchip me-2"></i> PC Hardware</a>
+                <a href="#" class="nav-link text-white small"><i class="fas fa-book me-2"></i> HQs & Mangás</a>
+            </nav>
         </aside>
 
         <main class="content-main">
-            <div class="pill-row">
-                <button class="btn btn-light btn-sm rounded-pill px-3">Tudo</button>
-                <button class="btn btn-dark btn-sm rounded-pill px-3 border-secondary">Playstation 5</button>
-                <button class="btn btn-dark btn-sm rounded-pill px-3 border-secondary">Unboxing</button>
-                <button class="btn btn-dark btn-sm rounded-pill px-3 border-secondary">PC Gamer</button>
-                <button class="btn btn-dark btn-sm rounded-pill px-3 border-secondary">Marvel</button>
-                <button class="btn btn-dark btn-sm rounded-pill px-3 border-secondary">Podcast</button>
-                <button class="btn btn-dark btn-sm rounded-pill px-3 border-secondary">Ao Vivo</button>
-            </div>
-
-            <section class="mb-5">
-                <div class="row g-4">
-                    <div class="col-12">
-                        <div class="video-card p-3 d-flex flex-column flex-md-row gap-4" style="background: linear-gradient(90deg, #161616 0%, #252525 100%);">
-                            <div class="thumb-box rounded shadow-lg" style="flex: 1;">
-                                <img src="https://picsum.photos/seed/tech/800/450" alt="Destaque">
-                                <span class="duration">15:04</span>
-                            </div>
-                            <div style="flex: 1;">
-                                <span class="badge bg-danger mb-2">NOVO VÍDEO</span>
-                                <h3 class="fw-bold">A Revolução do Hardware em 2026: O que esperar?</h3>
-                                <p class="text-gray">Análise profunda sobre as novas GPUs e como a IA está mudando o processamento gráfico este ano.</p>
-                                <button class="btn btn-warning fw-bold px-4 mt-2">Assistir Agora</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <h5 class="fw-bold mb-4"><i class="fas fa-fire text-danger me-2"></i> Recomendados</h5>
+            <h4 class="fw-bold mb-4">Vídeos Recentes</h4>
             <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-4">
                 <div class="col">
-                    <div class="video-card h-100">
-                        <div class="thumb-box"><img src="https://picsum.photos/seed/1/400/225"><span class="duration">10:20</span></div>
+                    <div class="video-card" data-bs-toggle="modal" data-bs-target="#playerModal" onclick="openVideo('Setup 2026', 'dQw4w9WgXcQ', 'setup-26')">
+                        <div class="thumb-box">
+                            <img src="https://picsum.photos/seed/setup/400/225" alt="Thumb">
+                        </div>
                         <div class="p-3">
-                            <h6 class="fw-bold">Montando o PC dos sonhos em 2026</h6>
-                            <p class="small text-gray mb-0">85 mil visualizações • há 2 dias</p>
+                            <h6 class="fw-bold mb-1">Meu Setup Gamer 2026: Upgrade Total!</h6>
+                            <p class="small text-gray mb-0">12 mil views • há 4 horas</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="video-card h-100">
-                        <div class="thumb-box"><img src="https://picsum.photos/seed/2/400/225"><span class="duration">08:45</span></div>
+                    <div class="video-card" data-bs-toggle="modal" data-bs-target="#playerModal" onclick="openVideo('Review OLED', '3JZ_D3ELwOQ', 'oled-26')">
+                        <div class="thumb-box">
+                            <img src="https://picsum.photos/seed/oled/400/225" alt="Thumb">
+                        </div>
                         <div class="p-3">
-                            <h6 class="fw-bold">Review: O novo console portátil da Sony?</h6>
-                            <p class="small text-gray mb-0">120 mil visualizações • há 5 horas</p>
+                            <h6 class="fw-bold mb-1">Review: Monitor OLED 4K é tudo isso?</h6>
+                            <p class="small text-gray mb-0">5 mil views • há 1 dia</p>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="video-card h-100">
-                        <div class="thumb-box"><img src="https://picsum.photos/seed/3/400/225"><span class="duration">12:15</span></div>
-                        <div class="p-3">
-                            <h6 class="fw-bold">Top 10 HQs que você precisa ler hoje</h6>
-                            <p class="small text-gray mb-0">30 mil visualizações • há 1 dia</p>
-                        </div>
-                    </div>
-                </div>
+            </div>
+
+            <div class="ad-box my-5 py-4 bg-primary text-dark border-0">
+                <span class="ad-label text-dark opacity-75">Publicidade</span>
+                <h4 class="fw-bold">DOMINE O DESENVOLVIMENTO WEB</h4>
+                <p>Torne-se um desenvolvedor Fullstack em 6 meses. Cupom: <strong>GEEKHUB</strong></p>
+                <button class="btn btn-dark btn-sm">Saber Mais</button>
             </div>
         </main>
 
         <aside class="sidebar-right">
-            <div class="ad-slot">
-                <span class="ad-badge">AD</span>
-                <p class="small text-gray mb-2">Melhor VPN de 2026</p>
-                <h6 class="fw-bold text-warning">Garantia de 2 anos com 80% OFF</h6>
-                <button class="btn btn-outline-warning btn-sm w-100 mt-2">Saiba Mais</button>
+            <div class="ad-box">
+                <span class="ad-label">Patrocinado</span>
+                <img src="https://picsum.photos/seed/ads/250/150" class="img-fluid rounded my-2">
+                <h6 class="fw-bold small">Cadeira Gamer Ergonômica Pro</h6>
+                <p class="small text-gray">Conforto para horas de gameplay.</p>
+                <a href="#" class="btn btn-outline-warning btn-sm w-100">Ver Oferta</a>
             </div>
 
-            <div class="card bg-dark border-secondary p-3 mb-4">
-                <h6 class="fw-bold"><i class="fas fa-envelope me-2"></i> Geek Letter</h6>
-                <p class="small text-gray">Receba notícias exclusivas por e-mail.</p>
-                <input type="email" class="form-control form-control-sm form-control-dark mb-2" placeholder="Seu melhor e-mail">
-                <button class="btn btn-primary btn-sm w-100">Assinar</button>
-            </div>
-
-            <h6 class="fw-bold mb-3">VÍDEOS EM ALTA</h6>
-            <div class="d-flex gap-3 mb-3">
-                <img src="https://picsum.photos/seed/a/100/60" class="rounded" style="width: 100px; object-fit: cover;">
-                <div>
-                    <h6 class="small fw-bold mb-0">E3 2026: O que rolou?</h6>
-                    <p class="text-gray" style="font-size: 11px;">2.4M visualizações</p>
-                </div>
-            </div>
-            <div class="d-flex gap-3 mb-3">
-                <img src="https://picsum.photos/seed/b/100/60" class="rounded" style="width: 100px; object-fit: cover;">
-                <div>
-                    <h6 class="small fw-bold mb-0">RTX 6090 Ti: Primeiros testes</h6>
-                    <p class="text-gray" style="font-size: 11px;">1.1M visualizações</p>
-                </div>
-            </div>
-
-            <div class="ad-slot bg-warning text-black border-0">
-                <span class="ad-badge bg-black text-white">AD</span>
-                <i class="fas fa-gamepad fa-3x mb-2"></i>
-                <h6 class="fw-bold">CURSO GAME DEV</h6>
-                <p class="small mb-2">Crie seu primeiro jogo em 30 dias.</p>
-                <button class="btn btn-dark btn-sm w-100">Inscrições Abertas</button>
+            <div class="card bg-dark border-secondary p-3">
+                <h6 class="text-warning fw-bold small">NEWSLETTER</h6>
+                <p class="small text-gray">Fique por dentro das novidades geek.</p>
+                <input type="email" class="form-control form-control-sm form-control-dark mb-2" placeholder="Seu e-mail">
+                <button class="btn btn-warning btn-sm w-100">Assinar</button>
             </div>
         </aside>
     </div>
 
     <footer>
         <div class="container">
-            <div class="row g-4 mb-5">
+            <div class="row g-4">
                 <div class="col-lg-4">
-                    <h5 class="fw-bold text-warning mb-4">RODRIGO PONTES HUB</h5>
-                    <p class="text-gray">A plataforma definitiva para entusiastas de hardware, games e cultura pop. Conteúdo diário e análises técnicas.</p>
-                    <div class="d-flex gap-3 mt-4">
-                        <a href="#" class="btn btn-dark btn-sm rounded-circle"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="btn btn-dark btn-sm rounded-circle"><i class="fab fa-discord"></i></a>
-                        <a href="#" class="btn btn-dark btn-sm rounded-circle"><i class="fab fa-twitch"></i></a>
+                    <h5 class="fw-bold text-warning">RODRIGO PONTES</h5>
+                    <p class="text-gray small">O seu hub de tecnologia e entretenimento geek. Analisando o futuro, hoje.</p>
+                </div>
+                <div class="col-lg-4">
+                    <h6 class="fw-bold mb-3">Siga nas redes</h6>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white fs-4"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="fab fa-twitch"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                    <h6 class="fw-bold mb-4">Navegação</h6>
-                    <ul class="list-unstyled text-gray small">
-                        <li class="mb-2">Sobre Nós</li>
-                        <li class="mb-2">Equipe</li>
-                        <li class="mb-2">Anuncie</li>
-                        <li class="mb-2">Carreiras</li>
-                    </ul>
-                </div>
-                <div class="col-lg-6">
-                    <h6 class="fw-bold mb-4">Mande um "Oi" para o suporte</h6>
-                    <form class="row g-2">
-                        <div class="col-md-6"><input type="text" class="form-control form-control-dark" placeholder="Nome"></div>
-                        <div class="col-md-6"><input type="email" class="form-control form-control-dark" placeholder="Email"></div>
-                        <div class="col-12 mt-2">
-                            <textarea class="form-control form-control-dark" rows="2" placeholder="Sua dúvida ou proposta..."></textarea>
-                        </div>
-                        <div class="col-12 mt-3 text-end">
-                            <button class="btn btn-warning px-5 fw-bold">ENVIAR</button>
-                        </div>
+                <div class="col-lg-4">
+                    <h6 class="fw-bold mb-3">Contato Rápido</h6>
+                    <form>
+                        <input type="email" class="form-control form-control-dark mb-2" placeholder="E-mail">
+                        <textarea class="form-control form-control-dark mb-2" rows="2" placeholder="Sua mensagem"></textarea>
+                        <button type="button" class="btn btn-warning btn-sm px-4 fw-bold">Enviar</button>
                     </form>
                 </div>
             </div>
-            <div class="border-top border-secondary pt-4 text-center">
-                <p class="small text-gray">&copy; <span id="year"></span> Rodrigo Pontes | Desenvolvido para a Comunidade Geek.</p>
+            <div class="text-center mt-5 pt-4 border-top border-secondary text-gray small">
+                &copy; <span id="autoYear"></span> Rodrigo Pontes Hub. Todos os direitos reservados.
             </div>
         </div>
     </footer>
 
+    <div class="modal fade" id="playerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content bg-black">
+                <div class="container py-4">
+                    <button type="button" class="btn btn-outline-light mb-3" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i> Fechar Player
+                    </button>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-9">
+                            <div class="ratio ratio-16x9 border border-secondary rounded overflow-hidden">
+                                <iframe id="ytPlayer" src="" allowfullscreen></iframe>
+                            </div>
+                            <div class="mt-4 p-4 bg-dark rounded shadow">
+                                <h2 id="modalTitle" class="fw-bold text-warning">Título do Vídeo</h2>
+                                <p class="text-gray">Seja gentil nos comentários! A discussão é o que faz a comunidade crescer.</p>
+                                
+                                <div id="disqus_thread"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
+        // Data automática no footer
+        document.getElementById('autoYear').textContent = new Date().getFullYear();
+
+        // Função do Player e Reset do Disqus
+        function openVideo(title, id, identifier) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('ytPlayer').src = "https://www.youtube.com/embed/" + id + "?autoplay=1";
+
+            // DISQUS RELOAD LOGIC
+            if (typeof DISQUS !== 'undefined') {
+                DISQUS.reset({
+                    reload: true,
+                    config: function () {  
+                        this.page.identifier = identifier;  
+                        this.page.url = window.location.href + "#!" + identifier;
+                        this.page.title = title;
+                    }
+                });
+            } else {
+                // Carregamento inicial (Substitua 'rodrigopontes' pelo seu shortname real do Disqus)
+                var disqus_config = function () {
+                    this.page.url = window.location.href + "#!" + identifier;
+                    this.page.identifier = identifier;
+                };
+                (function() {
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://rodrigopontes.disqus.com/embed.js'; // SEU SHORTNAME AQUI
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            }
+        }
+
+        // Para o vídeo ao fechar
+        document.getElementById('playerModal').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('ytPlayer').src = "";
+        });
+
+        // Clonar menu para o Mobile Offcanvas automaticamente
+        document.getElementById('menuMobileContent').innerHTML = document.querySelector('.sidebar-left nav').innerHTML;
     </script>
 </body>
 </html>
